@@ -2,7 +2,9 @@ import Foundation
 
 // MARK: - Collections
 
-public extension Collection {
+prefix operator ¡
+
+public extension Sequence {
     @inlinable static prefix func ¡ <T>(_ items: Self) -> [T] where Element == T? {
         items --> { $0 }
     }
@@ -10,13 +12,22 @@ public extension Collection {
 
 // MARK: - Nil Checking
 
+prefix operator ??
+prefix operator ?!
+
 public extension Optional {
-    @inlinable static prefix func ¿ (_ value: Self) -> Bool {
+    @inlinable static prefix func ?? (_ value: Self) -> Bool {
         value == nil
+    }
+    
+    @inlinable static prefix func ?! (_ value: Self) -> Bool {
+        value != nil
     }
 }
 
-// MARK: - Optionalize
+// MARK: - Optionalization
+
+prefix operator ¿
 
 public prefix func ¿ <T, U>(_ closure: @escaping (T) -> U) -> (T?) -> U? {
     {
@@ -29,11 +40,17 @@ public prefix func ¿ <T, U>(_ closure: @escaping (T) -> U) -> (T?) -> U? {
 
 // MARK: - Force Unwrapping
 
-public postfix func ¡ <T>(_ value: T?) throws -> T {
-    if ¿value {
-        throw UnexpectedNilError()
-    }
-    return value!
-}
+postfix operator ¡
 
-struct UnexpectedNilError: Error { }
+public extension Optional {
+    /// An error indicating that a nil value was unexpectedly found
+    /// while unwrapping an optional.
+    struct UnexpectedNilError: Error { }
+    
+    static postfix func ¡ (_ value: Self) throws -> Wrapped {
+        if ??value {
+            throw UnexpectedNilError()
+        }
+        return value!
+    }
+}

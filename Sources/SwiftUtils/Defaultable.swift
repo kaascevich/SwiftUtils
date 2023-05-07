@@ -6,6 +6,8 @@ public protocol Defaultable {
     static var defaultValue: Self { get }
 }
 
+postfix operator .?
+
 @inlinable public postfix func .? <T: Defaultable>(_ value: T?) -> T {
     value ?? .defaultValue
 }
@@ -57,6 +59,3 @@ extension Date:             Defaultable { public static let defaultValue: Self =
 extension NSPoint:          Defaultable { public static let defaultValue: Self = NSZeroPoint     }
 extension NSSize:           Defaultable { public static let defaultValue: Self = NSZeroSize      }
 extension NSRect:           Defaultable { public static let defaultValue: Self = NSZeroRect      }
-
-extension Optional:         Defaultable { public static var defaultValue: Self { none          } }
-extension Regex:            Defaultable { public static var defaultValue: Self { try! Self("") } }
