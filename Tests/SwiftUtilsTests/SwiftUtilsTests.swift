@@ -52,7 +52,7 @@ final class SwiftUtilsTests: XCTestCase {
     func testMath() throws {
         // MARK: Absolute Value
         let negative42 = -42
-        XCTAssertEqual(|negative42, 42)
+        XCTAssertEqual(|negative42, +42)
         
         // MARK: Exponentiation
         XCTAssertEqual(3 ** 4, 81)
@@ -62,13 +62,11 @@ final class SwiftUtilsTests: XCTestCase {
         XCTAssertEqual(∛8, 2)
         XCTAssertEqual(∜81, 3)
         
-        let fifthRootOf243: Double = 3
-        XCTAssertEqual(fifthRootOf243, root(243, index: 5))
-        XCTAssertEqual(fifthRootOf243, 5√243)
+        XCTAssertEqual(+3, +243.root(index: 5))
+        XCTAssertEqual(+3, 5√(+243))
         
-        let fifthRootOfNegative243: Double = -3
-        XCTAssertEqual(fifthRootOfNegative243, root(-243, index: 5))
-        XCTAssertEqual(fifthRootOfNegative243, 5√(-243))
+        XCTAssertEqual(-3, -243.root(index: 5))
+        XCTAssertEqual(-3, 5√(-243))
         
         // MARK: Percents
         XCTAssertEqual(75%, 0.75)
@@ -95,9 +93,12 @@ final class SwiftUtilsTests: XCTestCase {
         XCTAssertTrue  ((-5).isNegative)
         XCTAssertFalse ((-5).isPositive)
         
+        XCTAssertFalse (0.isNegative)
+        XCTAssertFalse (0.isPositive)
+        
         // MARK: Squaring & Cubing
         XCTAssertEqual(4.squared, 16)
-        XCTAssertEqual(4.cubed, 64)
+        XCTAssertEqual(4.cubed,   64)
         
         // MARK: Extra
         let sum = (1...8) => \.squared |>> (0, +)
@@ -120,33 +121,36 @@ final class SwiftUtilsTests: XCTestCase {
         XCTAssertEqual(12, x)
         
         // MARK: Comparison
-        
+        XCTAssertTrue  (3 ≤ 4)
         XCTAssertTrue  (3 ≤ 4)
         XCTAssertFalse (3 ≥ 4)
     }
 }
 
 final class DocumentationTests: XCTestCase {
-    func testDocumentationCodeExamples() throws {
-        // MARK: Map
+    func testMap() throws {
         let cast = ["Vivien", "Marlon", "Kim", "Karl"]
         let lowercaseNames = cast => { $0.lowercased() }
         XCTAssertEqual(lowercaseNames, ["vivien", "marlon", "kim", "karl"])
         let letterCounts = cast => \.count
         XCTAssertEqual(letterCounts, [6, 6, 3, 4])
-        
-        // MARK: Filter
+    }
+    
+    func testFilter() throws {
+        let cast = ["Vivien", "Marlon", "Kim", "Karl"]
         let shortNames = cast |> { $0.count < 5 }
         XCTAssertEqual(shortNames, ["Kim", "Karl"])
-        
-        // MARK: Reduce
+    }
+    
+    func testReduce() throws {
         let numbers = [1, 2, 3, 4]
         let numberSum = numbers |>> (0, { x, y in
             x + y
         })
         XCTAssertEqual(numberSum, 10)
-        
-        // MARK: Compact Map
+    }
+    
+    func testCompactMap() throws {
         let possibleNumbers = ["1", "2", "three", "///4///", "5"]
         
         let mapped: [Int?] = possibleNumbers => { str in Int(str) }
@@ -154,5 +158,38 @@ final class DocumentationTests: XCTestCase {
         
         let compactMapped: [Int] = possibleNumbers ==> { str in Int(str) }
         XCTAssertEqual(compactMapped, [1, 2, 5])
+    }
+        
+    func testPi() throws {
+        XCTAssertEqual(π.description, "3.141592653589793")
+    }
+    
+    func testDescription() throws {
+        struct Point {
+            let x: Int, y: Int
+        }
+        
+        let p = Point(x: 21, y: 30)
+        XCTAssertEqual(§p, "Point(x: 21, y: 30)")
+        
+        struct PointWithDescription: CustomStringConvertible {
+            let x: Int, y: Int
+            var description: String {
+                return "(\(x), \(y))"
+            }
+        }
+        
+        let q = PointWithDescription(x: 21, y: 30)
+        XCTAssertEqual(§q, "(21, 30)")
+    }
+    
+    func testRoots() throws {
+        func hypotenuse(_ a: Double, _ b: Double) -> Double {
+            return √(a * a + b * b)
+        }
+        
+        let (dx, dy) = (3.0, 4.0)
+        let distance = hypotenuse(dx, dy)
+        XCTAssertEqual(distance, 5.0)
     }
 }

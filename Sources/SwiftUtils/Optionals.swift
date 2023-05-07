@@ -2,19 +2,23 @@ import Foundation
 
 // MARK: - Collections
 
-public prefix func ¡ <T, U: Collection>(_ items: U) -> [T] where U.Element == T? {
-    items ==> { $0 }
+public extension Collection {
+    static prefix func ¡ <T>(_ items: Self) -> [T] where Element == T? {
+        items ==> { $0 }
+    }
 }
 
 // MARK: - Nil Checking
 
-public prefix func ¿ <T>(_ value: T?) -> Bool {
-    value == nil
+public extension Optional {
+    static prefix func ¿ (_ value: Self) -> Bool {
+        value == nil
+    }
 }
 
 // MARK: - Optionalize
 
-public prefix func ¿ <T, U>(_ closure: @escaping (T) -> (U)) -> (T?) -> (U?) {
+public prefix func ¿ <T, U>(_ closure: @escaping (T) -> U) -> (T?) -> U? {
     {
         guard let value = $0 else {
             return nil
