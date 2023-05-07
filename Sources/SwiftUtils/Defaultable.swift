@@ -6,7 +6,6 @@ public protocol Defaultable {
     static var defaultValue: Self { get }
 }
 
-postfix operator .?
 public postfix func .? <T: Defaultable>(_ value: T?) -> T {
     value ?? .defaultValue
 }

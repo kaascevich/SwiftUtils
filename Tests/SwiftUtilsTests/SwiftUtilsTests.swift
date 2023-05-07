@@ -11,16 +11,16 @@ final class SwiftUtilsTests: XCTestCase {
     func testCollections() throws {
         // MARK: Nil Removal
         let arrayWithNils = [1, 2, nil, 3, 2, nil, nil, 1]
-        XCTAssertEqual(!arrayWithNils, [1, 2, 3, 2, 1])
+        XCTAssertEqual(¡arrayWithNils, [1, 2, 3, 2, 1])
         
         // MARK: Map
-        XCTAssertEqual(arrayWithNils => (???), [false, false, true, false, false, true, true, false])
+        XCTAssertEqual(arrayWithNils => (¿), [false, false, true, false, false, true, true, false])
         
         // MARK: Compact Map & Optionalization
         XCTAssertEqual(arrayWithNils ==> ¿{ $0 + 1 }, [2, 3, 4, 3, 2])
         
         // MARK: Reduce
-        XCTAssertEqual(!arrayWithNils |>> (3, +), 12)
+        XCTAssertEqual(¡arrayWithNils |>> (3, +), 12)
         
         // MARK: Filter
         XCTAssertEqual(arrayWithNils |> { $0.? > 1 }, [2, 3, 2])
@@ -29,7 +29,7 @@ final class SwiftUtilsTests: XCTestCase {
         XCTAssert(arrayWithNils.isNotEmpty)
         
         // MARK: Sort
-        XCTAssertEqual(!arrayWithNils >< (<), [1, 1, 2, 2, 3])
+        XCTAssertEqual(¡arrayWithNils >< (<), [1, 1, 2, 2, 3])
     }
     
     func testForEach() throws {

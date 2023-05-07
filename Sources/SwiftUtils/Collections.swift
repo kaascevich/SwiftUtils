@@ -11,16 +11,14 @@ public extension Collection {
 
 // MARK: - Mapping
 
-infix operator =>: AdditionPrecedence
-@discardableResult public func => <T: Collection, U>(
+@discardableResult public func => <T: Sequence, U>(
     _ original: T,
     _ transform: (T.Element) throws -> U
 ) rethrows -> [U] {
     try original.map(transform)
 }
 
-infix operator ==>: AdditionPrecedence
-@discardableResult public func ==> <T: Collection, U>(
+@discardableResult public func ==> <T: Sequence, U>(
     _ original: T,
     _ transform: (T.Element) throws -> U?
 ) rethrows -> [U] {
@@ -29,7 +27,6 @@ infix operator ==>: AdditionPrecedence
 
 // MARK: - Filtering
 
-infix operator |>: AdditionPrecedence
 public func |> <T: Sequence>(
     _ items: T,
     _ isIncluded: (T.Element) -> Bool
@@ -39,16 +36,16 @@ public func |> <T: Sequence>(
 
 // MARK: - Reducing
 
-infix operator |>>: AdditionPrecedence
-
-public func |>> <T: Collection>(
-    _ original: T,
-    _ transform: (
-        initialResult: T.Element,
-        nextPartialTransform: (T.Element, T.Element) -> T.Element
-    )
-) -> T.Element {
-    original.reduce(transform.initialResult, transform.nextPartialTransform)
+public extension Sequence {
+    static func |>> (
+        _ original: Self,
+        _ transform: (
+            initialResult: Element,
+            nextPartialTransform: (Element, Element) -> Element
+        )
+    ) -> Element {
+        original.reduce(transform.initialResult, transform.nextPartialTransform)
+    }
 }
 
 // MARK: - For Each
@@ -64,10 +61,9 @@ public func => <T: Sequence>(
 
 // MARK: - Sorting
 
-infix operator ><: AdditionPrecedence
-public func >< <T>(
-    _ items: [T],
-    _ areInIncreasingOrder: @escaping (T, T) throws -> Bool
-) rethrows -> [T] {
+public func >< <T: RandomAccessCollection>(
+    _ items: T,
+    _ areInIncreasingOrder: @escaping (T.Element, T.Element) throws -> Bool
+) rethrows -> [T.Element] {
     try items.sorted(by: areInIncreasingOrder)
 }

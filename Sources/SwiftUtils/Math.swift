@@ -2,7 +2,6 @@ import Foundation
 
 // MARK: Absolute Value
 
-prefix operator |
 public prefix func | <T: Comparable & SignedNumeric>(_ value: T) -> T {
     abs(value)
 }
@@ -13,7 +12,7 @@ public extension Numeric {
     var squared: Self {
         self * self
     }
-    mutating func square() {
+    mutating func formSquare() {
         self = squared
     }
 }
@@ -22,36 +21,27 @@ public extension Numeric {
     var cubed: Self {
         self * self * self
     }
-    mutating func cube() {
+    mutating func formCube() {
         self = cubed
     }
 }
 
 // MARK: - Powers
 
-precedencegroup PowerPrecedence {
-    associativity: right
-    higherThan: MultiplicationPrecedence
-}
-
-infix operator **: PowerPrecedence
 public func ** (_ lhs: Double, _ rhs: Double) -> Double {
     pow(lhs, rhs)
 }
 
 // MARK: - Integer Roots
 
-prefix operator √
 public prefix func √ (_ value: Double) -> Double {
     2√value
 }
 
-prefix operator ∛
 public prefix func ∛ (_ value: Double) -> Double {
     3√value
 }
 
-prefix operator ∜
 public prefix func ∜ (_ value: Double) -> Double {
     4√value
 }
@@ -66,14 +56,12 @@ public func root(_ radicand: Double, index: Double) -> Double {
     }
 }
 
-infix operator √: PowerPrecedence
 public func √ (_ index: Double, _ radicand: Double) -> Double {
     root(radicand, index: index)
 }
 
 // MARK: - Percents
 
-postfix operator %
 public postfix func % <T: FloatingPoint>(_ value: T) -> T {
     value/100
 }

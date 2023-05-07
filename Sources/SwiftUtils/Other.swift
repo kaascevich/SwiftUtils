@@ -8,3 +8,9 @@ public func => (
 ) rethrows {
     try (0..<times) => body
 }
+
+// MARK: - Ranges
+
+extension Range: Defaultable where Bound: Defaultable {
+    public static var defaultValue: Self { Bound.defaultValue..<Bound.defaultValue }
+}
