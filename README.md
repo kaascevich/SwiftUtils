@@ -1,3 +1,3 @@
 # SwiftUtils
 
-A description of this package.
+Small utilities to make Swift just that little bit better
