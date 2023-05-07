@@ -51,3 +51,7 @@ prefix  operator ¡
 prefix  operator ¿
 
 postfix operator ¡
+
+// MARK: - Strings
+
+prefix operator §
