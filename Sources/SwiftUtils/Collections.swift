@@ -9,9 +9,9 @@ public extension Collection {
     }
 }
 
+// MARK: - Mapping
+
 public extension Sequence {
-    // MARK: - Mapping
-    
     /// Returns an array containing the results of mapping the given closure
     /// over the sequence's elements.
     ///
@@ -31,7 +31,7 @@ public extension Sequence {
     /// - Returns: An array containing the transformed elements of `original`.
     ///
     /// - Complexity: O(*n*), where *n* is the length of `original`.
-    @discardableResult static func => <T>(
+    @discardableResult static func ==> <T>(
         _ original: Self,
         _ transform: (Element) throws -> T
     ) rethrows -> [T] {
@@ -61,15 +61,17 @@ public extension Sequence {
     ///   with each element of `original`.
     ///
     /// - Complexity: O(*n*), where *n* is the length of `original`.
-    @discardableResult static func ==> <ElementOfResult>(
+    @discardableResult static func --> <ElementOfResult>(
         _ original: Self,
         _ transform: (Element) throws -> ElementOfResult?
     ) rethrows -> [ElementOfResult] {
         try original.compactMap(transform)
     }
-    
-    // MARK: - Filtering
-    
+}
+
+// MARK: - Filtering
+
+public extension Sequence {
     /// Returns an array containing, in order, the elements of `original`
     /// that satisfy the given predicate.
     ///
@@ -94,9 +96,11 @@ public extension Sequence {
     ) rethrows -> [Element] {
         try original.filter(isIncluded)
     }
-    
-    // MARK: - Reducing
-    
+}
+
+// MARK: - Reducing
+
+public extension Sequence {
     /// Returns the result of combining the elements of `original` using the
     /// given closure.
     ///
@@ -150,9 +154,11 @@ public extension Sequence {
     ) -> Result {
         original.reduce(resultGenerator.initialResult, resultGenerator.nextPartialResult)
     }
-    
-    // MARK: - For Each
-    
+}
+
+// MARK: - For Each
+
+public extension Sequence {
     /// Calls the given closure on each element in `sequence` in the same order
     /// as a `for`-`in` loop.
     ///
@@ -188,6 +194,43 @@ public extension Sequence {
         _ body: (Element) throws -> Void
     ) rethrows {
         try sequence.forEach(body)
+    }
+    
+    /// Calls the given closure on each element in `sequence` in the same order
+    /// as a `for`-`in` loop.
+    ///
+    /// The two loops in the following example produce the same output:
+    ///
+    ///     let numberWords = ["one", "two", "three"]
+    ///     for (index, word) in numberWords.enumerated() {
+    ///         print("\(word): \(index)")
+    ///     }
+    ///     // Prints "one: 1"
+    ///     // Prints "two: 2"
+    ///     // Prints "three: 3"
+    ///
+    ///     numberWords => { index, word in
+    ///         print("\(word): \(index)")
+    ///     }
+    ///     // Same as above
+    ///
+    /// Using the `=>` operator is distinct from a `for`-`in` loop in two
+    /// important ways:
+    ///
+    /// 1. You cannot use a `break` or `continue` statement to exit the current
+    ///    call of the `body` closure or skip subsequent calls.
+    /// 2. Using the `return` statement in the `body` closure will exit only from
+    ///    the current call to `body`, not from any outer scope, and won't skip
+    ///    subsequent calls.
+    ///
+    /// - Parameter sequence: The sequence to iterate over.
+    /// - Parameter body: A closure that takes an element of `sequence` and an
+    ///   the current loop index as parameters.
+    static func => (
+        _ sequence: Self,
+        _ body: (Int, Element) throws -> Void
+    ) rethrows {
+        try sequence.enumerated() => body
     }
 }
 

@@ -9,7 +9,7 @@ public extension Comparable {
     /// - Parameters:
     ///   - lhs: A value to compare.
     ///   - rhs: Another value to compare.
-    static func ≥ (_ lhs: Self, _ rhs: Self) -> Bool {
+    @inlinable static func ≥ (_ lhs: Self, _ rhs: Self) -> Bool {
         lhs >= rhs
     }
     
@@ -19,7 +19,7 @@ public extension Comparable {
     /// - Parameters:
     ///   - lhs: A value to compare.
     ///   - rhs: Another value to compare.
-    static func ≤ (_ lhs: Self, _ rhs: Self) -> Bool {
+    @inlinable static func ≤ (_ lhs: Self, _ rhs: Self) -> Bool {
         lhs <= rhs
     }
 }
@@ -49,7 +49,7 @@ public extension FloatingPoint {
     /// - Parameters:
     ///   - lhs: The value to divide.
     ///   - rhs: The value to divide `lhs` by.
-    static func ÷ (_ lhs: Self, _ rhs: Self) -> Self {
+    @inlinable static func ÷ (_ lhs: Self, _ rhs: Self) -> Self {
         lhs / rhs
     }
     
@@ -59,7 +59,7 @@ public extension FloatingPoint {
     /// - Parameters:
     ///   - lhs: The value to divide.
     ///   - rhs: The value to divide `lhs` by.
-    static func ÷= (_ lhs: inout Self, _ rhs: Self) {
+    @inlinable static func ÷= (_ lhs: inout Self, _ rhs: Self) {
         lhs /= rhs
     }
 }
@@ -87,7 +87,7 @@ public extension Numeric {
     /// - Parameters:
     ///   - lhs: The first value to multiply.
     ///   - rhs: The second value to multiply.
-    static func × (_ lhs: Self, _ rhs: Self) -> Self {
+    @inlinable static func × (_ lhs: Self, _ rhs: Self) -> Self {
         lhs * rhs
     }
     
@@ -97,7 +97,7 @@ public extension Numeric {
     /// - Parameters:
     ///   - lhs: The first value to multiply.
     ///   - rhs: The second value to multiply.
-    static func ×= (_ lhs: inout Self, _ rhs: Self) {
+    @inlinable static func ×= (_ lhs: inout Self, _ rhs: Self) {
         lhs *= rhs
     }
 }

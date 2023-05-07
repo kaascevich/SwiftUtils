@@ -14,10 +14,10 @@ final class SwiftUtilsTests: XCTestCase {
         XCTAssertEqual(¡arrayWithNils, [1, 2, 3, 2, 1])
         
         // MARK: Map
-        XCTAssertEqual(arrayWithNils => (¿), [false, false, true, false, false, true, true, false])
+        XCTAssertEqual(arrayWithNils ==> (¿), [false, false, true, false, false, true, true, false])
         
         // MARK: Compact Map & Optionalization
-        XCTAssertEqual(arrayWithNils ==> ¿{ $0 + 1 }, [2, 3, 4, 3, 2])
+        XCTAssertEqual(arrayWithNils --> ¿{ $0 + 1 }, [2, 3, 4, 3, 2])
         
         // MARK: Reduce
         XCTAssertEqual(¡arrayWithNils |>> (3, +), 12)
@@ -35,18 +35,23 @@ final class SwiftUtilsTests: XCTestCase {
     func testForEach() throws {
         // MARK: Repeat X Times
         var string = ""
-        5 => { i in string += §i }
+        5 => { num in string += §num }
         XCTAssertEqual(string, "01234")
         
         // MARK: Iterate through Range
         string = ""
-        (6...9) => { i in string += §i }
+        6...9 => { num in string += §num }
         XCTAssertEqual(string, "6789")
         
         // MARK: For Each in Array
         string = ""
-        [1, 2, 3, 2, 1] => { i in string += §i }
+        [1, 2, 3, 2, 1] => { num in string += §num }
         XCTAssertEqual(string, "12321")
+        
+        // MARK: For Each in Array with Index
+        string = ""
+        ["macOS", "is", "the", "bestOS"] => { i, str in string += §str + §i }
+        XCTAssertEqual(string, "macOS0is1the2bestOS3")
     }
     
     func testMath() throws {
@@ -54,7 +59,7 @@ final class SwiftUtilsTests: XCTestCase {
         let negative42 = -42
         XCTAssertEqual(|negative42, +42)
         
-        // MARK: Exponentiation
+        // MARK: Powers
         XCTAssertEqual(3 ** 4, 81)
         
         // MARK: Roots
@@ -100,8 +105,12 @@ final class SwiftUtilsTests: XCTestCase {
         XCTAssertEqual(4.squared, 16)
         XCTAssertEqual(4.cubed,   64)
         
+        // MARK: Scientific Notation
+        XCTAssertEqual(3 * ten(toThePowerOf: +3), 3 * 1000)
+        XCTAssertEqual(3 * ten(toThePowerOf: -3), 3 / 1000)
+        
         // MARK: Extra
-        let sum = (1...8) => \.squared |>> (0, +)
+        let sum = 1...8 ==> \.squared |>> (0, +)
         XCTAssertEqual(sum, 204)
     }
     
@@ -122,7 +131,6 @@ final class SwiftUtilsTests: XCTestCase {
         
         // MARK: Comparison
         XCTAssertTrue  (3 ≤ 4)
-        XCTAssertTrue  (3 ≤ 4)
         XCTAssertFalse (3 ≥ 4)
     }
 }
@@ -130,9 +138,9 @@ final class SwiftUtilsTests: XCTestCase {
 final class DocumentationTests: XCTestCase {
     func testMap() throws {
         let cast = ["Vivien", "Marlon", "Kim", "Karl"]
-        let lowercaseNames = cast => { $0.lowercased() }
+        let lowercaseNames = cast ==> { $0.lowercased() }
         XCTAssertEqual(lowercaseNames, ["vivien", "marlon", "kim", "karl"])
-        let letterCounts = cast => \.count
+        let letterCounts = cast ==> \.count
         XCTAssertEqual(letterCounts, [6, 6, 3, 4])
     }
     
@@ -153,10 +161,10 @@ final class DocumentationTests: XCTestCase {
     func testCompactMap() throws {
         let possibleNumbers = ["1", "2", "three", "///4///", "5"]
         
-        let mapped: [Int?] = possibleNumbers => { str in Int(str) }
+        let mapped: [Int?] = possibleNumbers ==> { str in Int(str) }
         XCTAssertEqual(mapped, [1, 2, nil, nil, 5])
         
-        let compactMapped: [Int] = possibleNumbers ==> { str in Int(str) }
+        let compactMapped: [Int] = possibleNumbers --> { str in Int(str) }
         XCTAssertEqual(compactMapped, [1, 2, 5])
     }
         

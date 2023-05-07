@@ -6,7 +6,7 @@ public protocol Defaultable {
     static var defaultValue: Self { get }
 }
 
-public postfix func .? <T: Defaultable>(_ value: T?) -> T {
+@inlinable public postfix func .? <T: Defaultable>(_ value: T?) -> T {
     value ?? .defaultValue
 }
 

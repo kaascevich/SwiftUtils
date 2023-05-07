@@ -2,20 +2,22 @@ import Foundation
 
 // MARK: - Precedence Groups
 
-precedencegroup PowerPrecedence {
-    associativity: right
-    higherThan: MultiplicationPrecedence
+precedencegroup ForEachPrecedence {
+    associativity: left
+    lowerThan: AssignmentPrecedence
 }
 
 // MARK: - Collections
 
-infix   operator =>  : AdditionPrecedence
-infix   operator ==> : AdditionPrecedence
+infix   operator ==> : ForEachPrecedence
+infix   operator --> : ForEachPrecedence
 
-infix   operator |>  : AdditionPrecedence
-infix   operator |>> : AdditionPrecedence
+infix   operator |>  : ForEachPrecedence
+infix   operator |>> : ForEachPrecedence
 
-infix   operator ><  : AdditionPrecedence
+infix   operator =>  : ForEachPrecedence
+
+infix   operator ><  : ForEachPrecedence
 
 // MARK: - Defaultable
 
@@ -25,8 +27,8 @@ postfix operator .?
 
 prefix  operator |
 
-infix   operator **  : PowerPrecedence
-infix   operator √   : PowerPrecedence
+infix   operator **  : BitwiseShiftPrecedence
+infix   operator √   : BitwiseShiftPrecedence
 prefix  operator √
 prefix  operator ∛
 prefix  operator ∜

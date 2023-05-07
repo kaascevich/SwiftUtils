@@ -3,15 +3,15 @@ import Foundation
 // MARK: - Collections
 
 public extension Collection {
-    static prefix func ¡ <T>(_ items: Self) -> [T] where Element == T? {
-        items ==> { $0 }
+    @inlinable static prefix func ¡ <T>(_ items: Self) -> [T] where Element == T? {
+        items --> { $0 }
     }
 }
 
 // MARK: - Nil Checking
 
 public extension Optional {
-    static prefix func ¿ (_ value: Self) -> Bool {
+    @inlinable static prefix func ¿ (_ value: Self) -> Bool {
         value == nil
     }
 }

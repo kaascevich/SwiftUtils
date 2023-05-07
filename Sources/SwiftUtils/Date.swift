@@ -22,13 +22,13 @@ public extension Date {
     
     /// The number of seconds from 1 January 1970 to the reference date,
     /// 1 January 2001.
-    static var timeIntervalBetweenEpochAndReferenceDate: Double {
+    @inlinable static var timeIntervalBetweenEpochAndReferenceDate: Double {
         timeIntervalBetween1970AndReferenceDate
     }
     
     /// The interval between 00:00:00 UTC on 1 January 1970 and the
     /// current date and time.
-    static var timeIntervalSinceEpoch: Double {
+    @inlinable static var timeIntervalSinceEpoch: Double {
         now.timeIntervalSinceEpoch
     }
     
@@ -39,7 +39,7 @@ public extension Date {
     ///
     /// This property’s value is negative if the date object is earlier than
     /// 00:00:00 UTC on 1 January 1970.
-    var timeIntervalSinceEpoch: Double {
+    @inlinable var timeIntervalSinceEpoch: Double {
         timeIntervalSince1970
     }
     
@@ -47,7 +47,7 @@ public extension Date {
     
     /// Creates a date value initialized relative to 00:00:00 UTC on 1
     /// January 1970 by a given number of seconds.
-    init(timeIntervalSinceEpoch: TimeInterval) {
+    @inlinable init(timeIntervalSinceEpoch: TimeInterval) {
         self.init(timeIntervalSince1970: timeIntervalSinceEpoch)
     }
 }

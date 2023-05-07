@@ -1,6 +1,6 @@
 import Foundation
 
-// MARK: Absolute Value
+// MARK: - Absolute Value
 
 /// Returns the absolute value of the given number.
 ///
@@ -19,35 +19,48 @@ import Foundation
     abs(x)
 }
 
-// MARK: - Squaring & Cubing
+// MARK: - Scientific Notation
+
+@inlinable public func ten(toThePowerOf exponent: Int) -> Double {
+    10 ** exponent
+}
+// MARK: - Squaring
 
 public extension Numeric {
-    var squared: Self {
+    @inlinable var squared: Self {
         self * self
     }
-    mutating func formSquare() {
+    @inlinable mutating func formSquare() {
         self = squared
     }
 }
 
+// MARK: - Cubing
+
 public extension Numeric {
-    var cubed: Self {
+    @inlinable var cubed: Self {
         self * self * self
     }
-    mutating func formCube() {
+    @inlinable mutating func formCube() {
         self = cubed
     }
 }
 
+// MARK: - Powers
+
 public extension Double {
-    // MARK: - Powers
-    
-    static func ** (_ lhs: Self, _ rhs: Self) -> Self {
-        pow(lhs, rhs)
+    static func ** (_ base: Self, _ power: Self) -> Self {
+        pow(base, power)
     }
     
-    // MARK: - Integer Roots
+    static func ** <T: BinaryInteger>(_ base: Self, _ power: T) -> Self {
+        base ** Double(power)
+    }
+}
     
+// MARK: - Integer Roots
+
+public extension Double {
     /// Returns the square root of `x`, rounded to a representable value.
     ///
     /// The following example declares a function that calculates the length of
@@ -62,26 +75,28 @@ public extension Double {
     ///     // distance == 5.0
     ///
     /// - Returns: The square root of `x`.
-    static prefix func √ (_ x: Self) -> Self {
+    @inlinable static prefix func √ (_ x: Self) -> Self {
         2√x
     }
     
     /// Returns the cube root of `x`, rounded to a representable value.
     ///
     /// - Returns: The cube root of `x`.
-    static prefix func ∛ (_ x: Self) -> Self {
+    @inlinable static prefix func ∛ (_ x: Self) -> Self {
         3√x
     }
     
     /// Returns the fourth root of `x`, rounded to a representable value.
     ///
     /// - Returns: The fourth root of `x`.
-    static prefix func ∜ (_ x: Self) -> Self {
+    @inlinable static prefix func ∜ (_ x: Self) -> Self {
         4√x
     }
-    
-    // MARK: - Arbitrary Roots
-    
+}
+
+// MARK: - Arbitrary Roots
+
+public extension Double {
     /// Returns the `n`th root of `x`, rounded to a representable value.
     ///
     /// The following example declares a function that calculates the length of
@@ -118,7 +133,7 @@ public extension Double {
     ///     // distance == 5.0
     ///
     /// - Returns: The `n`th root of `x`.
-    static func √ (_ index: Self, _ radicand: Self) -> Self {
+    @inlinable static func √ (_ index: Self, _ radicand: Self) -> Self {
         radicand.root(index: index)
     }
 }
@@ -136,20 +151,51 @@ public extension Double {
 ///     // Prints "3.141592653589793"
 public let π: Double = .pi
 
-public let ½: Double = 1/2
-public let ⅓: Double = 1/3
-public let ⅔: Double = 2/3
-public let ¼: Double = 1/4
-public let ¾: Double = 3/4
-public let ⅕: Double = 1/5
-public let ⅖: Double = 2/5
-public let ⅗: Double = 3/5
-public let ⅘: Double = 4/5
-public let ⅙: Double = 1/6
-public let ⅚: Double = 5/6
+// MARK: - Fractions
+
+/// The mathematical constant one-eighth (⅛), equal to 0.125.
 public let ⅛: Double = 1/8
+
+/// The mathematical constant one-sixth (⅙), approximately equal to 0.16667.
+public let ⅙: Double = 1/6
+
+/// The mathematical constant one-fifth (⅕), equal to 0.2.
+public let ⅕: Double = 1/5
+
+/// The mathematical constant one-fourth (¼), equal to 0.25.
+public let ¼: Double = 1/4
+
+/// The mathematical constant one-third (⅓), approximately equal to 0.33333.
+public let ⅓: Double = 1/3
+
+/// The mathematical constant three-eighths (⅜), equal to 0.375.
 public let ⅜: Double = 3/8
+
+/// The mathematical constant two-fifths (⅖), equal to 0.4.
+public let ⅖: Double = 2/5
+
+/// The mathematical constant one-half (½), equal to 0.5.
+public let ½: Double = 1/2
+
+/// The mathematical constant three-fifths (⅗), equal to 0.6.
+public let ⅗: Double = 3/5
+
+/// The mathematical constant five-eighths (⅝), equal to 0.625.
 public let ⅝: Double = 5/8
+
+/// The mathematical constant two-thirds (⅔), approximately equal to 0.66667.
+public let ⅔: Double = 2/3
+
+/// The mathematical constant three-fourths (¾), equal to 0.75.
+public let ¾: Double = 3/4
+
+/// The mathematical constant four-fifths (⅘), equal to 0.8.
+public let ⅘: Double = 4/5
+
+/// The mathematical constant five-sixths (⅚), approximately equal to 0.83333.
+public let ⅚: Double = 5/6
+
+/// The mathematical constant seven-eighths (⅞), equal to 0.875.
 public let ⅞: Double = 7/8
 
 // MARK: - Signs
@@ -158,14 +204,14 @@ public extension SignedNumeric where Self: Comparable {
     /// Returns a Boolean value indicating whether this value is negative.
     ///
     /// - Returns: `true` if this value is less than 0; otherwise, `false`.
-    var isNegative: Bool {
+    @inlinable var isNegative: Bool {
         self < 0 as Self
     }
     
     /// Returns a Boolean value indicating whether this value is positive.
     ///
     /// - Returns: `true` if this value is greater than 0; otherwise, `false`.
-    var isPositive: Bool {
+    @inlinable var isPositive: Bool {
         self > 0 as Self
     }
 }
@@ -204,7 +250,7 @@ public extension FloatingPoint {
     /// - Parameter rhs: The value to use when dividing `lhs`.
     /// - Returns: The remainder of `lhs` divided by `rhs` using
     ///   truncating division.
-    static func % (_ lhs: Self, _ rhs: Self) -> Self {
+    @inlinable static func % (_ lhs: Self, _ rhs: Self) -> Self {
         lhs.truncatingRemainder(dividingBy: rhs)
     }
     
@@ -239,12 +285,14 @@ public extension FloatingPoint {
     /// - Parameter rhs: The value to use when dividing `lhs`.
     /// - Returns: The remainder of `lhs` divided by `rhs` using
     ///   truncating division.
-    static func %= (_ lhs: inout Self, _ rhs: Self) {
+    @inlinable static func %= (_ lhs: inout Self, _ rhs: Self) {
         lhs = lhs % rhs
     }
+}
+
+// MARK: - Percents
     
-    // MARK: - Percents
-    
+public extension FloatingPoint {
     /// Returns the specified value divided by 100.
     ///
     /// The percentage operator (postfix `%`) returns its argument divided by
@@ -255,7 +303,7 @@ public extension FloatingPoint {
     ///     // y == 0.21
     ///
     /// - Returns: The argument divided by 100.
-    static postfix func % (_ operand: Self) -> Self {
+    @inlinable static postfix func % (_ operand: Self) -> Self {
         operand/100
     }
 }
