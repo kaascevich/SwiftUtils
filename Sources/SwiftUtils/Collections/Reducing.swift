@@ -27,7 +27,7 @@ public extension Sequence {
     /// When `|>>` is called, the following steps occur:
     ///
     /// 1. The `nextPartialResult` closure is called with `Result.defaultValue`
-    ///    ---`0` in this case---and the first element of `numbers`, returning
+    ///    --- `0` in this case --- and the first element of `numbers`, returning
     ///    the sum: `1`.
     /// 2. The closure is called again repeatedly with the previous call's return
     ///    value and each element of `original`.

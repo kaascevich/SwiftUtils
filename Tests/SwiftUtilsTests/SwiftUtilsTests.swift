@@ -39,11 +39,24 @@ final class SwiftUtilsTests: XCTestCase {
         
         // MARK: Sort
         XCTAssertEqual(¡arrayWithNils >< (<), [1, 1, 2, 2, 3])
+        
+        // MARK: Default Access Values
+        let dict = [
+            "keyOne": 42,
+            "keyTwo": 69
+        ]
+        XCTAssertEqual(dict["keyOne",   default: 17], 42)
+        XCTAssertEqual(dict["keyThree", default: 17], 17)
     }
     
     func testForEach() throws {
-        // MARK: Repeat X Times
+        // MARK: Repeat x Times
         var string = ""
+        3 => string.append("@autoclosure")
+        XCTAssertEqual(string, "@autoclosure@autoclosure@autoclosure")
+        
+        // MARK: Repeat x Times with Index
+        string = ""
         5 => { num in string += §num }
         XCTAssertEqual(string, "01234")
         
@@ -96,6 +109,14 @@ final class SwiftUtilsTests: XCTestCase {
         // MARK: Squaring & Cubing
         XCTAssertEqual(4.squared(), 16)
         XCTAssertEqual(4.cubed(),   64)
+        
+        // MARK: Parity
+        XCTAssertTrue  (0.isZero)
+        XCTAssertFalse (5.isZero)
+        
+        XCTAssertTrue  (5.isOdd)
+        XCTAssertTrue  (0.isEven)
+        XCTAssertFalse ((-84).isOdd)
         
         // MARK: Extra
         let sum = 1...8 ==> { $0.squared() } |>> (+)

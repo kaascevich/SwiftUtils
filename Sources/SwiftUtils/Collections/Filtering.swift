@@ -16,10 +16,12 @@ public extension Sequence {
     ///     print(shortNames)
     ///     // Prints "["Kim", "Karl"]"
     ///
-    /// - Parameter original: The sequence to filter.
-    /// - Parameter isIncluded: A closure that takes an element of
-    ///   `original` as its argument and returns a Boolean value indicating
-    ///   whether the element should be included in the returned array.
+    /// - Parameters:
+    ///   - original: The sequence to filter.
+    ///   - isIncluded: A closure that takes an element of
+    ///     `original` as its argument and returns a Boolean value indicating
+    ///     whether the element should be included in the returned array.
+    ///
     /// - Returns: An array of the elements that `isIncluded` allowed.
     ///
     /// - Complexity: O(*n*), where *n* is the length of `original`.

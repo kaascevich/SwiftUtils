@@ -17,10 +17,12 @@ public extension Sequence {
     ///     let letterCounts = cast => \.count
     ///     // 'letterCounts' == [6, 6, 3, 4]
     ///
-    /// - Parameter original: The sequence to map.
-    /// - Parameter transform: A mapping closure. `transform` accepts an
-    ///   element of `original` as its parameter and returns a transformed
-    ///   value of the same or of a different type.
+    /// - Parameters:
+    ///   - original: The sequence to transform.
+    ///   - transform: A mapping closure. `transform` accepts an
+    ///     element of `original` as its parameter and returns a transformed
+    ///     value of the same or of a different type.
+    ///     
     /// - Returns: An array containing the transformed elements of `original`.
     ///
     /// - Complexity: O(*n*), where *n* is the length of `original`.
@@ -54,8 +56,11 @@ public extension Sequence {
     ///     let compactMapped: [Int] = possibleNumbers ==> { str in Int(str) }
     ///     // [1, 2, 5]
     ///
-    /// - Parameter transform: A closure that accepts an element of
-    ///   `original` as its argument and returns an optional value.
+    /// - Parameters:
+    ///   - original: The sequence to transform.
+    ///   - transform: A closure that accepts an element of `original` as its
+    ///     argument and returns an optional value.
+    ///
     /// - Returns: An array of the non-`nil` results of calling `transform`
     ///   with each element of `original`.
     ///

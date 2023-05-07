@@ -32,9 +32,10 @@ public extension Sequence {
     ///    the current call to `body`, not from any outer scope, and won't skip
     ///    subsequent calls.
     ///
-    /// - Parameter sequence: The sequence to iterate over.
-    /// - Parameter body: A closure that takes an element of `sequence` as a
-    ///   parameter.
+    /// - Parameters:
+    ///   - sequence: The sequence to iterate over.
+    ///   - body: A closure that takes an element of `sequence` as a
+    ///     parameter.
     @inlinable static func => (
         _ sequence: Self,
         _ body: (Element) throws -> Void
@@ -69,9 +70,10 @@ public extension Sequence {
     ///    the current call to `body`, not from any outer scope, and won't skip
     ///    subsequent calls.
     ///
-    /// - Parameter sequence: The sequence to iterate over.
-    /// - Parameter body: A closure that takes an element of `sequence` and an
-    ///   the current loop index as parameters.
+    /// - Parameters:
+    ///   - sequence: The sequence to iterate over.
+    ///   - body: A closure that takes an element of `sequence` and the current
+    ///     loop index as parameters.
     @inlinable static func => (
         _ sequence: Self,
         _ body: (Int, Element) throws -> Void
@@ -106,9 +108,10 @@ public extension Sequence {
 ///    the current call to `body`, not from any outer scope, and won't skip
 ///    subsequent calls.
 ///
-/// - Parameter loopCount: The number of iterations to perform. Must be positive
-///   or zero; traps when negative.
-/// - Parameter body: A closure that takes an `Int` as a parameter.
+/// - Parameters:
+///   - loopCount: The number of iterations to perform. Must be positive or
+///     zero; traps when negative.
+///   - body: A closure that takes an `Int` as a parameter.
 public func => (
     _ loopCount: Int,
     _ body: (Int) throws -> Void
@@ -142,12 +145,50 @@ public func => (
 ///    the current call to `body`, not from any outer scope, and won't skip
 ///    subsequent calls.
 ///
-/// - Parameter loopCount: The number of iterations to perform. Must be positive
-///   or zero; traps when negative.
-/// - Parameter body: A closure that does not take any parameters.
+/// - Parameters:
+///   - loopCount: The number of iterations to perform. Must be positive or
+///     zero; traps when negative.
+///   - body: A closure that does not take any parameters.
 @inlinable public func => (
     _ loopCount: Int,
     _ body: () throws -> Void
 ) rethrows {
     try loopCount => { _ in try body() }
+}
+
+/// Executes the given statement a specified number of times.
+///
+/// The two loops in the following example produce the same output:
+///
+///     for _ in 0..<3 {
+///         print("Swift")
+///     }
+///     // Prints "Swift"
+///     // Prints "Swift"
+///     // Prints "Swift"
+///
+///     3 => print("Swift")
+///     // Same as above
+///
+/// Using the `=>` operator is distinct from a `for`-`in` loop in two
+/// important ways:
+///
+/// 1. You cannot use a `break` or `continue` statement to exit the current
+///    call of the `body` closure or skip subsequent calls.
+/// 2. Using the `return` statement in the `body` closure will exit only from
+///    the current call to `body`, not from any outer scope, and won't skip
+///    subsequent calls.
+///
+///    This overload of the `=>` operator utilizes an autoclosure to allow for
+///    more concise syntax at the call site.
+///
+/// - Parameters:
+///   - loopCount: The number of iterations to perform. Must be positive or
+///     zero; traps when negative.
+///   - body: The statement to execute on each iteration.
+@inlinable public func => (
+    _ loopCount: Int,
+    _ body: @autoclosure () throws -> Void
+) rethrows {
+    try loopCount => body
 }

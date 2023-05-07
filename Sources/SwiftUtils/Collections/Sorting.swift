@@ -76,10 +76,12 @@ public extension Sequence where Element: Comparable {
     /// preserves the relative order of elements for which
     /// `areInIncreasingOrder` does not establish an order.
     ///
-    /// - Parameter sequence: The sequence to sort.
-    /// - Parameter areInIncreasingOrder: A predicate that returns `true` if its
-    ///   first argument should be ordered before its second argument;
-    ///   otherwise, `false`.
+    /// - Parameters:
+    ///   - sequence: The sequence to sort.
+    ///   - areInIncreasingOrder: A predicate that returns `true` if its
+    ///     first argument should be ordered before its second argument;
+    ///     otherwise, `false`.
+    ///
     /// - Returns: A sorted array of `sequence`'s elements.
     ///
     /// - Complexity: O(*n* log *n*), where *n* is the length of `sequence`.
