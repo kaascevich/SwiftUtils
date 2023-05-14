@@ -59,8 +59,11 @@ final class SwiftUtilsTests: XCTestCase {
         ]
         
         // We can't use XCTAssertEqual or the == operator, since tuples
-        // aren't Equatable. We can get around this using Array.elementsEqual().
-        XCTAssert(dict.asArray().elementsEqual(expectedResult, by: ==))
+        // aren't Equatable (but can still be compared!). We can get
+        // around this using Array.elementsEqual().
+        //
+        // And don't forget to sort first!
+        XCTAssert(dict.asArray().sorted(by: <).elementsEqual(expectedResult, by: ==))
     }
     
     func testForEach() throws {

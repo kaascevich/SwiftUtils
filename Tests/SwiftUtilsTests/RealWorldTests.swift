@@ -17,11 +17,11 @@ final class RealWorldTests: XCTestCase {
         // We need to use the String representation because NaN != NaN
         XCTAssertEqual(§tempsFahrenheit, "[70.7, 66.65, 80.6, nan, 82.85, nan, 73.4]")
         
-        let badAverage: Double = tempsFahrenheit ==> { $0 / tempsFahrenheit.count } |>> (+)
+        let badAverage: Double = tempsFahrenheit ==> { $0 ÷ tempsFahrenheit.count } |>> (+)
         XCTAssert(badAverage.isNaN)
         
         let validTemps = tempsFahrenheit |> \.isNotNaN
-        let average: Double = validTemps --> { $0 / validTemps.count } |>> (+)
+        let average: Double = validTemps --> { $0 ÷ validTemps.count } |>> (+)
         let finalResult = "Average: \(average)°F in \(validTemps.count) out of \(tempsFahrenheit.count) observations."
         let expectedResult = "Average: 74.84°F in 5 out of 7 observations."
         XCTAssertEqual(finalResult, expectedResult)

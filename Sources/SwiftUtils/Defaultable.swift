@@ -68,7 +68,7 @@ extension Decimal:          Defaultable { public static let defaultValue: Self =
 extension CGFloat:          Defaultable { public static let defaultValue: Self = zero            }
 extension Duration:         Defaultable { public static let defaultValue: Self = zero            }
 
-#if arch(arm) || arch(arm64)
+#if     arch(arm)  || arch(arm64)
 extension Float16:          Defaultable { public static let defaultValue: Self = zero            }
 #elseif arch(i386) || arch(x86_64)
 extension Float80:          Defaultable { public static let defaultValue: Self = zero            }
