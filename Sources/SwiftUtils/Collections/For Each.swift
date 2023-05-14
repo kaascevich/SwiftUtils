@@ -109,9 +109,10 @@ public extension Sequence {
 ///    subsequent calls.
 ///
 /// - Parameters:
-///   - loopCount: The number of iterations to perform. Must be positive or
-///     zero; traps when negative.
+///   - loopCount: The number of iterations to perform.
 ///   - body: A closure that takes an `Int` as a parameter.
+///
+/// - Requires: `loopCount >= 0`.
 public func => (
     _ loopCount: Int,
     _ body: (Int) throws -> Void
@@ -146,9 +147,10 @@ public func => (
 ///    subsequent calls.
 ///
 /// - Parameters:
-///   - loopCount: The number of iterations to perform. Must be positive or
-///     zero; traps when negative.
+///   - loopCount: The number of iterations to perform.
 ///   - body: A closure that does not take any parameters.
+///
+/// - Requires: `loopCount >= 0`.
 @inlinable public func => (
     _ loopCount: Int,
     _ body: () throws -> Void
@@ -183,9 +185,10 @@ public func => (
 ///    more concise syntax at the call site.
 ///
 /// - Parameters:
-///   - loopCount: The number of iterations to perform. Must be positive or
-///     zero; traps when negative.
+///   - loopCount: The number of iterations to perform.
 ///   - body: The statement to execute on each iteration.
+///
+/// - Requires: `loopCount >= 0`.
 @inlinable public func => (
     _ loopCount: Int,
     _ body: @autoclosure () throws -> Void

@@ -12,16 +12,28 @@ public extension Sequence {
 
 // MARK: - Nil Checking
 
+public extension Optional {
+    /// A Boolean value indicating whether this optional is equal to `nil`.
+    @inlinable var isNil: Bool { self == nil }
+    
+    /// A Boolean value indicating whether this optional is not equal to `nil`.
+    @inlinable var isNotNil: Bool { !isNil }
+}
+
 prefix operator ??
 prefix operator ?!
 
 public extension Optional {
+    /// Returns a Boolean value indicating whether this optional is equal to
+    /// `nil`.
     @inlinable static prefix func ?? (_ value: Self) -> Bool {
-        value == nil
+        value.isNil
     }
     
+    /// Returns a Boolean value indicating whether this optional is not equal
+    /// to `nil`.
     @inlinable static prefix func ?! (_ value: Self) -> Bool {
-        value != nil
+        value.isNotNil
     }
 }
 

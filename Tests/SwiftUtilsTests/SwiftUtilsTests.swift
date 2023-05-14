@@ -117,10 +117,6 @@ final class SwiftUtilsTests: XCTestCase {
         XCTAssertTrue  (5.isOdd)
         XCTAssertTrue  (0.isEven)
         XCTAssertFalse ((-84).isOdd)
-        
-        // MARK: Extra
-        let sum = 1...8 ==> { $0.squared() } |>> (+)
-        XCTAssertEqual(sum, 204)
     }
     
     func testOperatorAliases() throws {

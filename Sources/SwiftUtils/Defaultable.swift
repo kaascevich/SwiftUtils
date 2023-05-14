@@ -2,14 +2,48 @@ import Foundation
 
 // MARK: - Declarations
 
+/// A type that provides a default value for use in automatic nil-coalescing
+/// operations.
 public protocol Defaultable {
+    /// The value used when this instance is `nil`.
+    ///
+    /// - Important: This property should be stable, and accessing it should not
+    ///   result in major side effects. It is recommended to declare it as a
+    ///   constant whenever possible.
     static var defaultValue: Self { get }
 }
 
 postfix operator .?
 
-@inlinable public postfix func .? <T: Defaultable>(_ value: T?) -> T {
-    value ?? .defaultValue
+/// Performs an automatic nil-coalescing operation, returning the wrapped value
+/// of an `Optional` instance or the type's default value.
+///
+/// An automatic nil-coalescing operation unwraps the operand if it has a value,
+/// or it returns the type's default value. The result of this operation will have
+/// the non-optional type of the operand's `Wrapped` type.
+///
+/// This operator uses short-circuit evaluation: `optional` is checked first,
+/// and `T.defaultValue` is evaluated only if `optional` is `nil`. For example:
+///
+///     let goodNumber = Int("100").?
+///     // goodNumber == 100
+///
+///     let notSoGoodNumber = Int("invalid-input").?
+///     // notSoGoodNumber == 0
+///
+/// In this example, `goodNumber` is assigned a value of `100` because
+/// `Int("100")` succeeded in returning a non-`nil` result. When
+/// `notSoGoodNumber` is initialized, `Int("invalid-input")` fails and returns
+/// `nil`, and so `T.defaultValue` is accessed to supply a default value.
+///
+/// - Parameter optional: An optional value.
+///
+/// - Returns: If `optional` is not `nil`, the unwrapped value of `optional`;
+///   otherwise, the type's default value.
+@inlinable public postfix func .? <T: Defaultable>(
+    _ optional: @autoclosure () throws -> T?
+) rethrows -> T {
+    try optional() ?? .defaultValue
 }
 
 // MARK: - Signed Integer Conformances
