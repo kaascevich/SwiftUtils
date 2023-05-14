@@ -12,9 +12,9 @@ public extension Sequence {
     /// to lowercase strings and then to count their characters.
     ///
     ///     let cast = ["Vivien", "Marlon", "Kim", "Karl"]
-    ///     let lowercaseNames = cast => { $0.lowercased() }
+    ///     let lowercaseNames = cast ==> { $0.lowercased() }
     ///     // 'lowercaseNames' == ["vivien", "marlon", "kim", "karl"]
-    ///     let letterCounts = cast => \.count
+    ///     let letterCounts = cast ==> \.count
     ///     // 'letterCounts' == [6, 6, 3, 4]
     ///
     /// - Parameters:
@@ -45,15 +45,15 @@ public extension Sequence {
     /// Use this operator to receive an array of non-optional values when your
     /// transformation produces an optional value.
     ///
-    /// In this example, note the difference in the result of using `=>` and
-    /// `==>` with a transformation that returns an optional `Int` value.
+    /// In this example, note the difference in the result of using `==>` and
+    /// `-->` with a transformation that returns an optional `Int` value.
     ///
     ///     let possibleNumbers = ["1", "2", "three", "///4///", "5"]
     ///
-    ///     let mapped: [Int?] = possibleNumbers => { str in Int(str) }
+    ///     let mapped: [Int?] = possibleNumbers ==> { str in Int(str) }
     ///     // [1, 2, nil, nil, 5]
     ///
-    ///     let compactMapped: [Int] = possibleNumbers ==> { str in Int(str) }
+    ///     let compactMapped: [Int] = possibleNumbers --> { str in Int(str) }
     ///     // [1, 2, 5]
     ///
     /// - Parameters:

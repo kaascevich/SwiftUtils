@@ -4,7 +4,7 @@ import Foundation
 
 prefix operator √
 
-public extension Double {
+public extension BinaryInteger {
     /// Returns the square root of `x`, rounded to a representable value.
     ///
     /// The following example declares a function that calculates the length of
@@ -20,7 +20,7 @@ public extension Double {
     ///
     /// - Parameter x: A positive number.
     /// - Returns: The square root of `x`.
-    @inlinable static prefix func √ (_ x: Double) -> Double {
+    @inlinable static prefix func √ (_ x: Self) -> Double {
         2√x
     }
 }
@@ -29,7 +29,7 @@ public extension Double {
 
 infix operator √: BitwiseShiftPrecedence
 
-public extension Double {
+public extension BinaryInteger {
     /// Returns the `n`th root of `self`, rounded to a representable value.
     ///
     /// The following example declares a function that calculates the length of
@@ -47,10 +47,12 @@ public extension Double {
     /// - Returns: The `n`th root of `self`.
     func root(index n: Int) -> Double {
         let n = Double(n)
-        if isNegative, |(n.truncatingRemainder(dividingBy: 2)) == 1 {
-            return -pow(-self, 1/n)
+        if ((self as? any SignedInteger)?.isNegative).?,
+           |(n.truncatingRemainder(dividingBy: 2)) == 1
+        {
+            return -pow(-Double(self), 1/n)
         } else {
-            return pow(self, 1/n)
+            return pow(Double(self), 1/n)
         }
     }
     
@@ -73,7 +75,7 @@ public extension Double {
     ///   - radicand: The value to calculate the root of.
     ///
     /// - Returns: The root of the `radicand` with degree `index`.
-    @inlinable static func √ (_ index: Int, _ radicand: Double) -> Double {
+    @inlinable static func √ (_ index: Int, _ radicand: Self) -> Double {
         radicand.root(index: index)
     }
 }

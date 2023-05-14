@@ -9,14 +9,17 @@ final class SwiftUtilsTests: XCTestCase {
     // MARK: - Tests
     
     func testDefaultable() throws {
-        // MARK: Coalesce with Default
-        XCTAssertEqual(5.?, 5)
-        XCTAssertEqual((nil as Int?).?, 0)
+        // MARK: Automatic Nil Coalescing
+        let intWithValue:    Int? = 5
+        let intWithoutValue: Int? = nil
+        
+        XCTAssertEqual(intWithValue.?,    5)
+        XCTAssertEqual(intWithoutValue.?, 0)
     }
     
     func testMapping() throws {
-        // MARK: Mapping and Nil Checking
-        XCTAssertEqual(arrayWithNils ==> (??), [false, false, true, false, false, true, true, false])
+        // MARK: Map
+        XCTAssertEqual(arrayWithNils ==> \.isNil, [false, false, true, false, false, true, true, false])
         
         // MARK: Compact Map
         XCTAssertEqual(arrayWithNils --> ¿{ $0 + 1 }, [2, 3, 4, 3, 2])
@@ -47,6 +50,17 @@ final class SwiftUtilsTests: XCTestCase {
         ]
         XCTAssertEqual(dict["keyOne",   default: 17], 42)
         XCTAssertEqual(dict["keyThree", default: 17], 17)
+        
+        // MARK: - Dictionaries as Arrays
+        
+        let expectedResult = [
+            (key: "keyOne", value: 42),
+            (key: "keyTwo", value: 69)
+        ]
+        
+        // We can't use XCTAssertEqual or the == operator, since tuples
+        // aren't Equatable. We can get around this using Array.elementsEqual().
+        XCTAssert(dict.asArray().elementsEqual(expectedResult, by: ==))
     }
     
     func testForEach() throws {
@@ -56,30 +70,31 @@ final class SwiftUtilsTests: XCTestCase {
         XCTAssertEqual(string, "@autoclosure@autoclosure@autoclosure")
         
         // MARK: Repeat x Times with Index
-        string = ""
+        string.removeAll()
         5 => { num in string += §num }
         XCTAssertEqual(string, "01234")
         
         // MARK: Iterate through Range
-        string = ""
+        string.removeAll()
         6...9 => { num in string += §num }
         XCTAssertEqual(string, "6789")
         
         // MARK: For Each in Array
-        string = ""
+        string.removeAll()
         [1, 2, 3, 2, 1] => { num in string += §num }
         XCTAssertEqual(string, "12321")
         
         // MARK: For Each in Array with Index
-        string = ""
+        string.removeAll()
         ["macOS", "is", "the", "bestOS"] => { i, str in string += §str + §i }
         XCTAssertEqual(string, "macOS0is1the2bestOS3")
     }
     
     func testMath() throws {
+        let positive243 = +243
+        let negative243 = -243
         // MARK: Absolute Value
-        let negative42 = -42
-        XCTAssertEqual(|negative42, +42)
+        XCTAssertEqual(|negative243, positive243)
         
         // MARK: Powers
         XCTAssertEqual(3 ** 4, 81)
@@ -87,17 +102,21 @@ final class SwiftUtilsTests: XCTestCase {
         // MARK: Roots
         XCTAssertEqual(√2, sqrt(2))
         
-        XCTAssertEqual(+3, +243.root(index: 5))
-        XCTAssertEqual(+3, 5√(+243))
+        XCTAssertEqual(+3, positive243.root(index: 5))
+        XCTAssertEqual(+3, 5√positive243)
         
-        XCTAssertEqual(-3, -243.root(index: 5))
-        XCTAssertEqual(-3, 5√(-243))
+        XCTAssertEqual(-3, negative243.root(index: 5))
+        XCTAssertEqual(-3, 5√negative243)
+        
+        XCTAssert((√(-64)).isNaN)
         
         // MARK: Percents
         XCTAssertEqual(75%, 0.75)
         
         // MARK: Constants
         XCTAssertEqual(π, Double.pi)
+        XCTAssertEqual(infinity, Double.infinity)
+        XCTAssert     (NaN.isNaN)
         
         // MARK: Signs
         XCTAssertTrue  ((-5).isNegative)
@@ -130,5 +149,17 @@ final class SwiftUtilsTests: XCTestCase {
         // MARK: Comparison
         XCTAssertTrue  (3 ≤ 4)
         XCTAssertFalse (3 ≥ 4)
+    }
+    
+    func testOptionals() throws {
+        // MARK: Force Unwrapping
+        
+        let intWithValue:    Int? = 5
+        let intWithoutValue: Int? = nil
+        
+        XCTAssertNoThrow(try intWithValue¡)
+        XCTAssertThrowsError(try intWithoutValue¡) { error in
+            XCTAssertEqual(§type(of: error), "UnexpectedNilError")
+        }
     }
 }

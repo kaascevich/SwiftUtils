@@ -40,10 +40,8 @@ postfix operator .?
 ///
 /// - Returns: If `optional` is not `nil`, the unwrapped value of `optional`;
 ///   otherwise, the type's default value.
-@inlinable public postfix func .? <T: Defaultable>(
-    _ optional: @autoclosure () throws -> T?
-) rethrows -> T {
-    try optional() ?? .defaultValue
+@inlinable public postfix func .? <T: Defaultable>(_ optional: T?) -> T {
+    optional ?? .defaultValue
 }
 
 // MARK: - Signed Integer Conformances
@@ -65,11 +63,16 @@ extension UInt64:           Defaultable { public static let defaultValue: Self =
 // MARK: - Floating-Point Conformances
 
 extension Float:            Defaultable { public static let defaultValue: Self = zero            }
-extension Float16:          Defaultable { public static let defaultValue: Self = zero            }
 extension Double:           Defaultable { public static let defaultValue: Self = zero            }
 extension Decimal:          Defaultable { public static let defaultValue: Self = zero            }
 extension CGFloat:          Defaultable { public static let defaultValue: Self = zero            }
 extension Duration:         Defaultable { public static let defaultValue: Self = zero            }
+
+#if arch(arm) || arch(arm64)
+extension Float16:          Defaultable { public static let defaultValue: Self = zero            }
+#elseif arch(i386) || arch(x86_64)
+extension Float80:          Defaultable { public static let defaultValue: Self = zero            }
+#endif
 
 // MARK: - String Conformances
 
