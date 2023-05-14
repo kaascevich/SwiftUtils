@@ -23,8 +23,8 @@ public extension Sequence {
     ///     }
     ///     // Same as above
     ///
-    /// Using the `=>` operator is distinct from a `for`-`in` loop in two
-    /// important ways:
+    /// Using the for-each (`=>`) operator is distinct from a `for`-`in` loop in
+    /// two important ways:S
     ///
     /// 1. You cannot use a `break` or `continue` statement to exit the current
     ///    call of the `body` closure or skip subsequent calls.
@@ -61,8 +61,8 @@ public extension Sequence {
     ///     }
     ///     // Same as above
     ///
-    /// Using the `=>` operator is distinct from a `for`-`in` loop in two
-    /// important ways:
+    /// Using the for-each (`=>`) operator is distinct from a `for`-`in` loop in
+    /// two important ways:
     ///
     /// 1. You cannot use a `break` or `continue` statement to exit the current
     ///    call of the `body` closure or skip subsequent calls.
@@ -99,8 +99,8 @@ public extension Sequence {
 ///     }
 ///     // Same as above
 ///
-/// Using the `=>` operator is distinct from a `for`-`in` loop in two
-/// important ways:
+/// Using the for-each (`=>`) operator is distinct from a `for`-`in` loop in
+/// two important ways:
 ///
 /// 1. You cannot use a `break` or `continue` statement to exit the current
 ///    call of the `body` closure or skip subsequent calls.
@@ -137,8 +137,8 @@ public func => (
 ///     }
 ///     // Same as above
 ///
-/// Using the `=>` operator is distinct from a `for`-`in` loop in two
-/// important ways:
+/// Using the for-each (`=>`) operator is distinct from a `for`-`in` loop in
+/// two important ways:
 ///
 /// 1. You cannot use a `break` or `continue` statement to exit the current
 ///    call of the `body` closure or skip subsequent calls.
@@ -172,8 +172,8 @@ public func => (
 ///     3 => print("Swift")
 ///     // Same as above
 ///
-/// Using the `=>` operator is distinct from a `for`-`in` loop in two
-/// important ways:
+/// Using the for-each (`=>`) operator is distinct from a `for`-`in` loop in
+/// two important ways:
 ///
 /// 1. You cannot use a `break` or `continue` statement to exit the current
 ///    call of the `body` closure or skip subsequent calls.
@@ -181,8 +181,8 @@ public func => (
 ///    the current call to `body`, not from any outer scope, and won't skip
 ///    subsequent calls.
 ///
-///    This overload of the `=>` operator utilizes an autoclosure to allow for
-///    more concise syntax at the call site.
+/// This overload of the for-each (`=>`) operator utilizes an autoclosure to
+/// allow for more concise syntax at the call site.
 ///
 /// - Parameters:
 ///   - loopCount: The number of iterations to perform.

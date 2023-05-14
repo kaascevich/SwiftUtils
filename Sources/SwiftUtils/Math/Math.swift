@@ -21,25 +21,6 @@ prefix operator |
     abs(x)
 }
 
-
-// MARK: - Powers
-
-public extension BinaryInteger {
-    @inlinable func squared() -> Self {
-        self * self
-    }
-    
-    @inlinable func cubed() -> Self {
-        self * self * self
-    }
-}
-
-infix operator **: BitwiseShiftPrecedence
-
-@inlinable public func ** (_ base: Double, _ power: Double) -> Double {
-    pow(base, power)
-}
-
 // MARK: - Percents
 
 postfix operator %
@@ -53,10 +34,10 @@ public extension FloatingPoint {
     ///     let y = 21%
     ///     // y == 0.21
     ///
-    /// - Parameter operand: The number to divide.
+    /// - Parameter x: The number to divide.
     /// - Returns: The given number divided by 100.
-    @inlinable static postfix func % (_ operand: Self) -> Self {
-        operand/100
+    @inlinable static postfix func % (_ x: Self) -> Self {
+        x/100
     }
 }
 
@@ -64,9 +45,29 @@ public extension FloatingPoint {
 
 public extension AdditiveArithmetic {
     /// A Boolean value indicating whether this value is equal to the zero value.
-    @inlinable var isZero: Bool { self == Self.zero }
+    @inlinable var isZero: Bool { self == .zero }
     
     /// A Boolean value indicating whether this value is not equal to the zero
     /// value.
     @inlinable var isNotZero: Bool { !isZero }
+}
+
+// MARK: - Reciprocals
+
+public extension FloatingPoint {
+    /// Returns the reciprocal of this value.
+    ///
+    /// The reciprocal is calculated by diving 1 by `self`.
+    ///
+    /// - Returns: 1 divided by `self`.
+    @inlinable func reciprocal() -> Self {
+        1/self
+    }
+    
+    /// Replaces this value with its reciprocal.
+    ///
+    /// The reciprocal is calculated by diving 1 by `self`.
+    @inlinable mutating func formReciprocal() {
+        self = reciprocal()
+    }
 }

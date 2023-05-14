@@ -61,3 +61,23 @@ public extension FloatingPoint {
     /// subnormalized number.
     @inlinable var isNotNormalized: Bool { isNotNormal }
 }
+
+// MARK: - Quiet NaNs
+
+public extension FloatingPoint {
+    /// A Boolean value indicating whether the instance is a quiet NaN.
+    @inlinable var isQuietNaN: Bool { isNaN && isNotSignalingNaN }
+    
+    /// A Boolean value indicating whether the instance is not a quiet NaN.
+    @inlinable var isNotQuietNaN: Bool { !isQuietNaN }
+}
+
+// MARK: - e (Euler's Number)
+
+public extension BinaryFloatingPoint {
+    /// The mathematical constant e (Euler's number), approximately equal to 2.71828.
+    static var e: Self {
+        // 46 digits, just in case we get an ultra-high precision float
+        2.71828_18284_59045_23536_02874_71352_66249_77572_47093
+    }
+}

@@ -13,6 +13,9 @@ import Foundation
 ///     // Prints "3.14159265358979"
 public let π: Double = .pi
 
+/// The mathematical constant e (Euler's number), approximately equal to 2.71828.
+public let e: Double = .e
+
 /// Positive infinity.
 ///
 /// Infinity compares greater than all finite numbers and equal to other

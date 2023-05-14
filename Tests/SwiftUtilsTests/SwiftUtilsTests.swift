@@ -105,10 +105,10 @@ final class SwiftUtilsTests: XCTestCase {
         // MARK: Roots
         XCTAssertEqual(√2, sqrt(2))
         
-        XCTAssertEqual(+3, positive243.root(index: 5))
+        XCTAssertEqual(+3, positive243.root(withDegree: 5))
         XCTAssertEqual(+3, 5√positive243)
         
-        XCTAssertEqual(-3, negative243.root(index: 5))
+        XCTAssertEqual(-3, negative243.root(withDegree: 5))
         XCTAssertEqual(-3, 5√negative243)
         
         XCTAssert((√(-64)).isNaN)
@@ -117,9 +117,10 @@ final class SwiftUtilsTests: XCTestCase {
         XCTAssertEqual(75%, 0.75)
         
         // MARK: Constants
-        XCTAssertEqual(π, Double.pi)
-        XCTAssertEqual(infinity, Double.infinity)
-        XCTAssert     (NaN.isNaN)
+        XCTAssertEqual (π, Double.pi)
+        XCTAssertEqual (e, Double.e, 2.718281828459045)
+        XCTAssertEqual (infinity, Double.infinity)
+        XCTAssert      (NaN.isNaN)
         
         // MARK: Signs
         XCTAssertTrue  ((-5).isNegative)
